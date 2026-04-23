@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/hesreallyhim/claude-code-json-schema/main/schemas/marketplace.schema.json",
   "name": "maxvision-skills",
   "description": "MaxVision's curated Claude Code skills marketplace",
   "version": "0.1.0",

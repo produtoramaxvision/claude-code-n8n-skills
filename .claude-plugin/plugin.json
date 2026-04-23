@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/hesreallyhim/claude-code-json-schema/main/schemas/plugin.schema.json",
   "name": "n8n-skills",
   "version": "0.1.0",
   "description": "7 expert skills for building flawless n8n workflows in Claude Code. Derived from czlonkowski/n8n-skills v1.6.0 (MIT).",
