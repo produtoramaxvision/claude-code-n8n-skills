@@ -1,11 +1,13 @@
 {
   "name": "maxvision-skills",
-  "description": "MaxVision's curated Claude Code skills marketplace",
-  "version": "0.1.0",
   "owner": {
     "name": "Produtora MaxVision",
     "email": "produtoramaxvision@gmail.com",
     "url": "https://github.com/produtoramaxvision"
+  },
+  "metadata": {
+    "description": "MaxVision's curated Claude Code skills marketplace",
+    "version": "0.1.0"
   },
   "plugins": [
     {
