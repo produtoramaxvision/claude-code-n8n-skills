@@ -50,9 +50,9 @@ jobs:
           curl -fsSL -o marketplace.schema.json \
             https://raw.githubusercontent.com/hesreallyhim/claude-code-json-schema/main/schemas/marketplace.schema.json
       - name: Validate plugin.json against schema
-        run: ajv validate -c ajv-formats -s plugin.schema.json -d .claude-plugin/plugin.json --strict=false
+        run: ajv validate --spec=draft2020 -c ajv-formats -s plugin.schema.json -d .claude-plugin/plugin.json --strict=false
       - name: Validate marketplace.json against schema
-        run: ajv validate -c ajv-formats -s marketplace.schema.json -d .claude-plugin/marketplace.json --strict=false
+        run: ajv validate --spec=draft2020 -c ajv-formats -s marketplace.schema.json -d .claude-plugin/marketplace.json --strict=false
 
   skills-structure:
     name: Skills Structure
