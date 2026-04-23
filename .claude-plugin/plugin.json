@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/hesreallyhim/claude-code-json-schema/main/schemas/plugin.schema.json",
+  "name": "n8n-skills",
+  "version": "0.1.0",
+  "description": "7 expert skills for building flawless n8n workflows in Claude Code. Derived from czlonkowski/n8n-skills v1.6.0 (MIT).",
+  "author": {
+    "name": "Produtora MaxVision",
+    "email": "produtoramaxvision@gmail.com",
+    "url": "https://github.com/produtoramaxvision"
+  },
+  "homepage": "https://github.com/produtoramaxvision/claude-code-n8n-skills",
+  "repository": "https://github.com/produtoramaxvision/claude-code-n8n-skills",
+  "license": "MIT",
+  "keywords": [
+    "n8n",
+    "claude-code",
+    "claude-plugin",
+    "skills",
+    "ai-workflows",
+    "automation",
+    "workflow-automation"
+  ],
+  "skills": "./skills/"
+}

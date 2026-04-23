@@ -1,0 +1,28 @@
+{
+  "$schema": "https://raw.githubusercontent.com/hesreallyhim/claude-code-json-schema/main/schemas/marketplace.schema.json",
+  "name": "maxvision-skills",
+  "description": "MaxVision's curated Claude Code skills marketplace",
+  "version": "0.1.0",
+  "owner": {
+    "name": "Produtora MaxVision",
+    "email": "produtoramaxvision@gmail.com",
+    "url": "https://github.com/produtoramaxvision"
+  },
+  "plugins": [
+    {
+      "name": "n8n-skills",
+      "description": "7 expert skills for building flawless n8n workflows in Claude Code",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/n8n-code-javascript",
+        "./skills/n8n-code-python",
+        "./skills/n8n-expression-syntax",
+        "./skills/n8n-mcp-tools-expert",
+        "./skills/n8n-node-configuration",
+        "./skills/n8n-validation-expert",
+        "./skills/n8n-workflow-patterns"
+      ]
+    }
+  ]
+}

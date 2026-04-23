@@ -1,0 +1,97 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  markdown:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DavidAnson/markdownlint-cli2-action@v20
+        with:
+          globs: |
+            **/*.md
+            #node_modules
+            #.upstream-cache
+
+  json:
+    name: JSON Syntax + Plugin Schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli@5 ajv-formats@3
+      - name: Validate JSON syntax (all files)
+        run: |
+          set -e
+          find . -name "*.json" \
+            -not -path "./node_modules/*" \
+            -not -path "./.upstream-cache/*" \
+            -not -path "./.git/*" \
+            -print0 | xargs -0 -I{} sh -c 'echo "Checking {}"; jq . "{}" > /dev/null'
+      - name: Download plugin.json schema
+        run: |
+          curl -fsSL -o plugin.schema.json \
+            https://raw.githubusercontent.com/hesreallyhim/claude-code-json-schema/main/schemas/plugin.schema.json
+      - name: Download marketplace.json schema
+        run: |
+          curl -fsSL -o marketplace.schema.json \
+            https://raw.githubusercontent.com/hesreallyhim/claude-code-json-schema/main/schemas/marketplace.schema.json
+      - name: Validate plugin.json against schema
+        run: ajv validate -c ajv-formats -s plugin.schema.json -d .claude-plugin/plugin.json --strict=false
+      - name: Validate marketplace.json against schema
+        run: ajv validate -c ajv-formats -s marketplace.schema.json -d .claude-plugin/marketplace.json --strict=false
+
+  skills-structure:
+    name: Skills Structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify each skill has SKILL.md with required frontmatter
+        run: |
+          set -e
+          missing=0
+          for dir in skills/*/; do
+            file="$dir/SKILL.md"
+            if [ ! -f "$file" ]; then
+              echo "Missing SKILL.md in $dir"
+              missing=$((missing+1))
+              continue
+            fi
+            if ! grep -q "^name:" "$file"; then
+              echo "$file missing 'name:' in frontmatter"
+              missing=$((missing+1))
+            fi
+            if ! grep -q "^description:" "$file"; then
+              echo "$file missing 'description:' in frontmatter"
+              missing=$((missing+1))
+            fi
+          done
+          if [ "$missing" -gt 0 ]; then
+            echo "Total issues: $missing"
+            exit 1
+          fi
+          echo "All skills valid"
+
+  secrets:
+    name: Secret Scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

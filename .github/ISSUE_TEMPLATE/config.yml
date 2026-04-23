@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Skill content issues (upstream)
+    url: https://github.com/czlonkowski/n8n-skills/issues
+    about: Questions or bugs about skill content (instructions, examples, factual accuracy) should be reported upstream.
+  - name: Security vulnerability
+    url: https://github.com/produtoramaxvision/claude-code-n8n-skills/security/advisories/new
+    about: Report a security vulnerability privately.
